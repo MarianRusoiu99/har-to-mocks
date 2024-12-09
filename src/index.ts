@@ -28,7 +28,7 @@ class HarToMocks extends Command {
       char: 't',
       options: Object.values(ResourceType),
       description: 'filter by resourceType',
-      default: ResourceType.xhr,
+      default: ResourceType.none,
     }),
 
     // flag to not write files, just show results (--dry-run)
@@ -42,18 +42,19 @@ class HarToMocks extends Command {
 
   async run() {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const pkg = require('../package.json') as Package;
-    updateNotifier({
-      pkg,
-      updateCheckInterval: 100,
-      shouldNotifyInNpmScript: true,
-    }).notify();
+    // const pkg = require('../package.json') as Package;
+    // updateNotifier({
+    //   pkg,
+    //   updateCheckInterval: 100,
+    //   shouldNotifyInNpmScript: true,
+    // }).notify();
 
     const process = new HarToMocksProcess(this.log.bind(this));
     const { args, flags: usedFlags } = this.parse(HarToMocks);
 
     if (args.file && typeof args.file === 'string') {
       const data = (await readJson(args.file)) as Har;
+      // console.log(data)
       process.extract(data, {
         methods: usedFlags.method as Method[],
         resourceType: usedFlags.type,

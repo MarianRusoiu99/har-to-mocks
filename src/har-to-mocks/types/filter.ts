@@ -19,6 +19,7 @@ export enum ResourceType {
   // png = 'png',
   // gif = 'gif',
   // font = 'font',
+  none = '',
   doc = 'document',
   // ws = 'websocket',
 }
